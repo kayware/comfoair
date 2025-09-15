@@ -171,6 +171,8 @@ public:
         // finished
         if (data_[COMMAND_ID_ACK] != COMMAND_ACK) {
           parse_data_();
+        } else {
+          ESP_LOGD(TAG, "Received ACK from device.");
         }
         data_index_ = 0;
       } else if (!*check) {
