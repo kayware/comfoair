@@ -20,7 +20,7 @@ public:
   // Poll every 600ms
   ComfoAirComponent() :
   Climate(),
-  PollingComponent(600),
+  PollingComponent(10000),
   UARTDevice() { }
 
   /// Return the traits of this controller.
