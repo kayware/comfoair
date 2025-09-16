@@ -112,7 +112,11 @@ public:
   }
 
   void update() override {
+    static uint8_t rs232_mode_cmd[1] = { 0x01 };
     switch(update_counter_) {
+      case -5:
+        write_command_(CMD_SET_RS232_MODE, rs232_mode_cmd, sizeof(rs232_mode_cmd));
+        break;
       case -4:
         write_command_(CMD_GET_BOOTLOADER_VERSION, nullptr, 0);
         break;
@@ -324,6 +328,9 @@ protected:
     uint8_t *msg = &data_[COMMAND_LEN_HEAD];
 
     switch (data_[COMMAND_IDX_MSG_ID]) {
+      case RES_SET_RS232_MODE:
+        ESP_LOGD(tag, "Got RS232 mode: %02x.", data_[COMMAND_IDX_DATA]);
+        break;
       case RES_GET_BOOTLOADER_VERSION:
         memcpy(bootloader_version_, msg, data_[COMMAND_IDX_DATA]);
         break;
@@ -838,7 +845,7 @@ protected:
 
   uint8_t data_[30];
   uint8_t data_index_{0};
-  int8_t update_counter_{-4};
+  int8_t update_counter_{-5};
   const int8_t num_update_counter_elements_{9};
 
   uint8_t bootloader_version_[13]{0};
