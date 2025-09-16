@@ -102,6 +102,8 @@ public:
     p = connector_board_version_;
     ESP_LOGCONFIG(TAG, "  Connector Board %.10s v%0d.%02d", p + 2, *p, *(p + 1));
 
+    ESP_LOGCONFIG(TAG, "Got RS232 mode: %02x.", rs232_mode_);
+
     if (*(p + 12) != 0) {
       ESP_LOGCONFIG(TAG, "  CC-Ease v%0d.%02d", *(p + 12) >> 4, *(p + 12) & 0x0f);
     }
@@ -330,6 +332,7 @@ protected:
     switch (data_[COMMAND_IDX_MSG_ID]) {
       case RES_SET_RS232_MODE:
         ESP_LOGD(TAG, "Got RS232 mode: %02x.", data_[COMMAND_IDX_DATA]);
+        rs232_mode_ = msg[0];
         break;
       case RES_GET_BOOTLOADER_VERSION:
         memcpy(bootloader_version_, msg, data_[COMMAND_IDX_DATA]);
@@ -848,6 +851,7 @@ protected:
   int8_t update_counter_{-5};
   const int8_t num_update_counter_elements_{9};
 
+  uint8_t rs232_mode_{0};
   uint8_t bootloader_version_[13]{0};
   uint8_t firmware_version_[13]{0};
   uint8_t connector_board_version_[14]{0};
