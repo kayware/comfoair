@@ -112,7 +112,7 @@ public:
   }
 
   void update() override {
-    static uint8_t rs232_mode_cmd[1] = { 0x01 };
+    static uint8_t rs232_mode_cmd[1] = { 0x03 };
     switch(update_counter_) {
       case -5:
         write_command_(CMD_SET_RS232_MODE, rs232_mode_cmd, sizeof(rs232_mode_cmd));
