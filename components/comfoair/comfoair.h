@@ -329,7 +329,7 @@ protected:
 
     switch (data_[COMMAND_IDX_MSG_ID]) {
       case RES_SET_RS232_MODE:
-        ESP_LOGD(tag, "Got RS232 mode: %02x.", data_[COMMAND_IDX_DATA]);
+        ESP_LOGD(TAG, "Got RS232 mode: %02x.", data_[COMMAND_IDX_DATA]);
         break;
       case RES_GET_BOOTLOADER_VERSION:
         memcpy(bootloader_version_, msg, data_[COMMAND_IDX_DATA]);
